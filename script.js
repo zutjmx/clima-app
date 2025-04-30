@@ -134,7 +134,7 @@ function displayWeather(weather, city, country) {
     weatherContainer.style.display = "block";
     cityHeader.textContent = `${city}, ${country}`;
     temp.textContent = `Temperatura: ${weather.temperature}°C`;
-    condition.textContent = `Condition: ${weatherCondition}`;
+    condition.textContent = `Condición: ${weatherCondition}`;
     windSpeed.textContent = `Velocidad del viento: ${weather.windspeed} km/h`;
 }
 
