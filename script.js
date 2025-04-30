@@ -1,10 +1,27 @@
 document.getElementById("searchBtn").addEventListener("click", () => {
     const city = document.getElementById("cityField").value.trim();
-    console.log('Nombre de la ciudad: ',city);
+    console.log('Nombre de la ciudad: ', city);
+
     if (city) {
+
+        Swal.fire({
+            title: 'Clima App',
+            text: "Buscando información...",
+            icon: "info",
+            showConfirmButton: false,
+            allowOutsideClick: false
+        });
+
         getCoordinates(city);
     } else {
-        showError("Please enter a city name");
+
+        Swal.fire({
+            title: "Clima App",
+            text: "Se necesita un nombre de ciudad",
+            icon: "error",
+        });
+
+        showError("Se necesita un nombre de ciudad");
     }
 });
 
@@ -19,25 +36,46 @@ async function getCoordinates(city) {
         console.log('Respuesta de la API search: ', response);
 
         if (!response.ok) {
-            throw new Error("City not found");
+
+            Swal.fire({
+                title: "Clima App",
+                text: "Ciudad no encontrada",
+                icon: "error",
+            });
+
+            throw new Error("Ciudad no encontrada");
         }
 
         const data = await response.json();
         if (!data.results || data.results.length === 0) {
-            throw new Error("Location not found");
+            
+            Swal.fire({
+                title: "Clima App",
+                text: "Ubicación no encontrada",
+                icon: "error",
+            });
+            
+            throw new Error("Ubicación no encontrada");
         }
 
         console.log('Datos de la ubicación: ', data.results[0]);
 
         const { latitude, longitude, name, country } = data.results[0];
-        
+
         console.log('Latitud: ', latitude);
         console.log('Longitud: ', longitude);
         console.log('Nombre de la ciudad: ', name);
         console.log('País: ', country);
-        
+
         getWeather(latitude, longitude, name, country);
     } catch (error) {
+
+        Swal.fire({
+            title: "Clima App",
+            text: "Se produjo un error al buscar la ciudad",
+            icon: "error",
+        });
+
         showError(error.message);
     }
 }
@@ -48,27 +86,43 @@ async function getWeather(latitude, longitude, city, country) {
         const response = await fetch(
             `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`
         );
-        
+
         console.log('Respuesta de la API forecast: ', response);
 
         if (!response.ok) {
+
+            Swal.fire({
+                title: "Clima App",
+                text: "Error al obtener el clima",
+                icon: "error",
+            });
+
             throw new Error("Weather data not available");
         }
 
         const data = await response.json();
 
         console.log('Datos del clima: ', data.current_weather);
-        
+
         displayWeather(data.current_weather, city, country);
     } catch (error) {
+
+        Swal.fire({
+            title: "Clima App",
+            text: "Error al obtener el clima",
+            icon: "error",
+        });
+
         showError(error.message);
     }
 }
 
 function displayWeather(weather, city, country) {
 
+    Swal.close();
+
     console.log('Entra a la función displayWeather');
-    
+
     const weatherContainer = document.getElementById("weatherContainer");
     const cityHeader = document.getElementById("cityName");
     const temp = document.getElementById("temperature");
