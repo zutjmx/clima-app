@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clima App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="tituloCentrado">Clima App</h1>
+        <div class="searchContainer">
+            <input class="inputField" id="cityField" placeholder="Nombre de la ciudad..." type="text" />
+            <button class="searchBtn" id="searchBtn">Búsqueda</button>
+        </div>
+        <div id="weatherContainer">
+            <h2 id="cityName"></h2>
+            <p id="temperature"></p>
+            <p id="condition"></p>
+            <p id="windSpeed"></p>
+        </div>
+        <p id="errorMessage"></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
